@@ -1,7 +1,7 @@
 import feedparser
 
 # サンプルRSSフィードURL
-RSS_URL = "https://example.com/rss"
+RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml
 
 # フィードを取得
 def fetch_rss(url):
