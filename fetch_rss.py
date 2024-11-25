@@ -1,38 +1,44 @@
-import feedparser
-import json
 from datetime import datetime
+import feedparser
 
-# RSSフィードURLリスト
-RSS_URLS = [
+# RSSフィードのURLリスト
+RSS_FEEDS = [
     "https://www.nhk.or.jp/rss/news/cat0.xml",
-    "https://www.nhk.or.jp/rss/news/cat1.xml"
+    "https://www.nhk.or.jp/rss/news/cat1.xml",
 ]
 
-# JSONファイル出力先
-OUTPUT_FILE = "rss_data.json"
-
 def fetch_rss():
-    all_posts = []
-    for url in RSS_URLS:
+    posts = []
+
+    for url in RSS_FEEDS:
         feed = feedparser.parse(url)
         for entry in feed.entries:
-            all_posts.append({
+            posts.append({
                 "title": entry.title,
                 "link": entry.link,
                 "published": entry.published,
-                "summary": entry.summary if hasattr(entry, "summary") else "",
             })
-    
-    # 重複排除（タイトルを基準）
-    unique_posts = {post["title"]: post for post in all_posts}.values()
 
-    # 投稿日時で降順ソート
-    sorted_posts = sorted(unique_posts, key=lambda x: datetime.strptime(x["published"], "%a, %d %b %Y %H:%M:%S %Z"), reverse=True)
+    # 重複を排除
+    unique_posts = {post["title"]: post for post in posts}.values()
 
-    # トップ10を取得
+    # 日時をパースする関数
+    def parse_date(date_str):
+        try:
+            return datetime.strptime(date_str, "%a, %d %b %Y %H:%M:%S %z")
+        except ValueError:
+            print(f"Failed to parse date: {date_str}")
+            return datetime.min
+
+    # ソート（最新順）
+    sorted_posts = sorted(unique_posts, key=lambda x: parse_date(x["published"]), reverse=True)
+
+    # 上位10件のみ取得
     return sorted_posts[:10]
 
 if __name__ == "__main__":
     posts = fetch_rss()
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(posts, f, ensure_ascii=False, indent=2)
+    for post in posts:
+        print(f"Title: {post['title']}")
+        print(f"Link: {post['link']}")
+        print(f"Published: {post['published']}\n")
