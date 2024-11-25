@@ -1,6 +1,6 @@
 const RSS_URLS = [
-    "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", // サンプルRSSフィード
-    "https://example.com/rss" // 他のRSSフィードを追加可能
+    "https://www.nhk.or.jp/rss/news/cat0.xml", // サンプルRSSフィード
+    "https://www.nhk.or.jp/rss/news/cat1.xml" // 他のRSSフィードを追加可能
 ];
 
 async function fetchRSS() {
