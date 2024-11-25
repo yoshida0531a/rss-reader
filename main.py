@@ -1,15 +1,13 @@
+from flask import Flask, render_template
 import feedparser
 
-# サンプルRSSフィードURL
-RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml
+app = Flask(__name__)
 
-# フィードを取得
-def fetch_rss(url):
-    feed = feedparser.parse(url)
-    for entry in feed.entries:
-        print(f"Title: {entry.title}")
-        print(f"Link: {entry.link}")
-        print(f"Published: {entry.published}\n")
+@app.route("/")
+def index():
+    RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml"
+    feed = feedparser.parse(RSS_URL)
+    return render_template("index.html", entries=feed.entries)
 
 if __name__ == "__main__":
-    fetch_rss(RSS_URL)
+    app.run(debug=True)
