@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Reader</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Top 10 Trending Posts</h1>
+        <ul>
+            {% for post in posts %}
+            <li>
+                <h2><a href="{{ post.link }}" target="_blank">{{ post.title }}</a></h2>
+                <p>{{ post.published }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
 
