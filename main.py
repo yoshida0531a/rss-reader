@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 # サンプルRSSフィードURLリスト
 RSS_URLS = [
-    "https://example.com/rss1",
-    "https://example.com/rss2",
+    "https://www.nhk.or.jp/rss/news/cat0.xml",
+    "https://www.nhk.or.jp/rss/news/cat1.xml",
 ]
 
 # グローバル変数に最新フィードを保存
