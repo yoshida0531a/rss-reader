@@ -1,6 +1,5 @@
 name: Fetch RSS
 
-# ワークフローを6時間ごとに実行
 on:
   schedule:
     - cron: "0 */6 * * *" # 6時間ごとに実行
@@ -11,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # リポジトリのコードを取得
+      # 最新版のCheckoutアクションを使用
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # @v3 → @v4に更新
 
-      # Pythonの環境をセットアップ
+      # 最新版のSetup Pythonアクションを使用
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # @v4 → @v5に更新
         with:
           python-version: 3.9
 
@@ -36,4 +35,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # 現在のディレクトリ全体を公開
+          publish_dir: ./
