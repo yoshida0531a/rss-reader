@@ -1,5 +1,6 @@
 from datetime import datetime
 import feedparser
+import json  # JSONモジュールを追加
 
 # RSSフィードのURLリスト
 RSS_FEEDS = [
@@ -38,7 +39,9 @@ def fetch_rss():
 
 if __name__ == "__main__":
     posts = fetch_rss()
-    for post in posts:
-        print(f"Title: {post['title']}")
-        print(f"Link: {post['link']}")
-        print(f"Published: {post['published']}\n")
+
+    # JSONファイルに保存
+    with open("rss_data.json", "w", encoding="utf-8") as f:
+        json.dump(posts, f, ensure_ascii=False, indent=4)
+
+    print("rss_data.json が生成されました。")
